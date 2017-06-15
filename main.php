@@ -143,7 +143,7 @@ while(true) { // Keep trying to read files forever
 						$bytesread = 0;
 						sleep(1);
 						
-						echo "Doesn't look like there's another block yet. Re-reading... ($fp) [$du GB]\n";
+						echo "Doesn't look like there's another block yet. Re-reading... ($fp)\n";
 					}
 				}
 			}
