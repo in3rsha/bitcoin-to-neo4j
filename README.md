@@ -136,7 +136,7 @@ define("REDIS_PORT", '6379');
 
 ## Run.
 
-Make sure Neo4j is running (`sudo neo4j start`), then start running the script with:
+Make sure Neo4j is running (`sudo service neo4j start`), then start running the script with:
 
 ```
 php main.php
