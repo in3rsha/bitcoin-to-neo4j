@@ -1,6 +1,6 @@
 # Benchmarks
 
-I did a rough test few common/useful queries, each returning various numbers of nodes. I repeated each query 3 times.
+I did a few rough tests for common/useful bitcoin queries, each returning various numbers of nodes. I repeated each query 3 times.
 
 Times are in ms (milliseconds).
 
@@ -17,8 +17,9 @@ Getting a block and all the transactions connected to it.
 
 ### Query
 
+```
 PROFILE MATCH (b:block)<-[:inc]-(t:tx) WHERE b.hash='000000000000000000ebaa7b3a804d9ba856b3bd61659f8f363bd42dc9c4a94c' RETURN b, t
-
+```
 
 ## Transactions
 
@@ -32,8 +33,9 @@ Getting a transaction and all the inputs/outputs connected to it.
 
 ### Query
 
+```
 PROFILE MATCH (inputs)-[:in]->(tx:tx)-[:out]->(outputs) WHERE tx.txid='c21e2592abcd3eea532f51f3e18bbc9d9ad23b44f643d9aea580bf0ce0d4d0bc' OPTIONAL MATCH (inputs)-[:locked]->(inputsaddresses) OPTIONAL MATCH (outputs)-[:locked]->(outputsaddresses) OPTIONAL MATCH (tx)-[:inc]->(block) RETURN inputs, tx, outputs, block, inputsaddresses, outputsaddresses
-
+```
 
 ## Addresses
 
@@ -50,8 +52,9 @@ Note: The top query took over 60s to run each time, so I didn't get a final time
 
 ### Query
 
+```
 MATCH (address :address)<-[:locked]-(output :output) WHERE address.address='$address' RETURN address, output
-
+```
 
 ## Conclusion
 
