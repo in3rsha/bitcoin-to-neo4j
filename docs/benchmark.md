@@ -60,4 +60,4 @@ MATCH (address :address)<-[:locked]-(output :output) WHERE address.address='$add
 
 Neo4j is fast enough for practical use.
 
-The only query that really struggles is the rare addresses that have 300,000+ outputs attached to them. But these are rare. However for those the time becomes impractical.
+The only query that really struggles is the addresses that have 300,000+ outputs attached to them. But these are rare. However for those the time becomes impractical.
