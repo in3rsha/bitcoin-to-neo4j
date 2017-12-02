@@ -47,7 +47,7 @@ This returns a block with all the transactions that are included in it.
 ![](images/address.png)
 
 ```
-MATCH (address :address {address:'1PNXRAA3dYTzVRLwWG1j3ip9JKtmzvBjdY'})<-[:locked]-(output :output)
+MATCH (address :address)<-[:locked]-(output :output)
 WHERE address.address='$address'
 RETURN address, output
 ```
