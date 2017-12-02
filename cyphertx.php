@@ -214,7 +214,6 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 			// Catch any errors caught by locks on nodes when writing to Neo4j
 			try {
 				$result = $neo->run($cypher);
-				$cleanup = $neo->run("MATCH (:output)-[:in]->(n) WHERE NOT labels(n) DETACH DELETE n");
 				break;
 			}
 			// Echo the error, then wait a second before trying again.
