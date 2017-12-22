@@ -96,3 +96,30 @@ RETURN path
 ```
 
 This query allows you to see if two address are connected by a series of transactions. It also returns a path if there are common intermediary addresses.
+
+## Historical Analyses
+
+### First Transctions
+
+The following query finds all non-coinbase transactions in the first 1000 blocks.
+
+```cypher
+MATCH (block:block)-[:inc]-(tx:tx)
+WHERE block.height < 1000
+  AND not exists((tx)<-[:in]-(:coinbase))
+RETURN
+  block.height AS block,
+  tx.txid AS transaction,
+  size((tx)<-[:in]-()) AS inputs,
+  size((tx)-[:out]->()) AS outputs,
+  tx.fee / tx.size AS fee_satoshis_per_byte
+ORDER BY block
+```
+
+The first few rows returned are:
+
+| block | transaction | inputs | outputs | fee_satoshis_per_byte |
+|-------|-------------|--------|---------|-----------------------|
+| 170 | f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16 | 1 | 2 | 0 |
+| 181 | a16f3ce4dd5deb92d98ef5cf8afeaf0775ebca408f708b2146c4fb42b41e14be | 1 | 2 | 0 |
+| 182 | 591e91f809d716912ca1d4a9295e70c3e78bab077683f79350f101da64588073 | 1 | 2 | 0 |
