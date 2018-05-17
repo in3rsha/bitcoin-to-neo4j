@@ -153,8 +153,8 @@ while(true) { // Keep trying to read files forever
             if (feof($fh)) {
 
                 // if there is a next file, go to it
-                $nextfile = blk00000($start+$step);
-                if (file_exists("$folder/$nextfile")) {
+                $nextfile = blk00000($start+1);
+                if (file_exists(BLOCKS."/$nextfile")) {
                     echo "\nThere is a file $nextfile.\n"; sleep(1);
                     $start = $start+1;  // Set the file number to the next one
                     break 2;            // ... Restart main loop (opens next file)
