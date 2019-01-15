@@ -105,8 +105,8 @@ while(true) { // Keep trying to read files forever
                     // Read the full block of data
                     $block = bin2hex(fread($fh, $blocksize));
 
-                    // if last 78 characters are all zeros, then we probably haven't got the full block data, so wait for it
-                    if (hexdec(substr($block, -78)) == 0) {
+                    // if last 500 characters are all zeros, then we probably haven't got the full block data, so wait for it
+                    if (hexdec(substr($block, -500)) == 0) {
                         echo "Doesn't look like the blk.dat file has all the bytes of data for the block. Wait a second for it to arrive...\n";
                         file_put_contents('log/blockwait.txt', "$block\n\n");
 
