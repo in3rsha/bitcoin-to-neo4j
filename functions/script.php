@@ -11,7 +11,7 @@ function decodeScript($script) {
 
 if($script) {
 
-	// store the original	
+	// store the original
 	$hex = $script;
 
 	$opcodes = [
@@ -25,10 +25,10 @@ if($script) {
 		'4e' => 'OP_PUSHDATA4', // next 4 bytes = number of bytes to push
 		'4f' => 'OP_1NEGATE',   // number -1 pushed on to stack
 		'51' => 'OP_1',         // number 1 pushed on to stack
-		'52' => 'OP_2',       
-		'53' => 'OP_3',     
-		'54' => 'OP_4',   
-		'55' => 'OP_5',  
+		'52' => 'OP_2',
+		'53' => 'OP_3',
+		'54' => 'OP_4',
+		'55' => 'OP_5',
 		'56' => 'OP_6',
 		'57' => 'OP_7',
 		'58' => 'OP_8',
@@ -41,7 +41,7 @@ if($script) {
 		'6f' => 'OP_15',
 		'60' => 'OP_16',
 		// 52-60 = The number in the word name (OP_2-OP_16) is pushed onto the stack.
-	
+
 		// Flow Control
 		// ------------
 		'61' => 'OP_NOP', // does nothing
@@ -51,7 +51,7 @@ if($script) {
 		'68' => 'OP_ENDIF',
 		'69' => 'OP_VERIFY',
 		'6a' => 'OP_RETURN',
-	
+
 		// Stack
 		// -----
 		'6b' => 'OP_TOALTSTACK',
@@ -73,7 +73,7 @@ if($script) {
 		'70' => 'OP_2OVER',
 		'71' => 'OP_2ROT',
 		'72' => 'OP_2SWAP',
-	
+
 		// Splice
 		// ------
 		'7e' => 'OP_CAT',
@@ -81,7 +81,7 @@ if($script) {
 		'80' => 'OP_LEFT',
 		'81' => 'OP_RIGHT',
 		'82' => 'OP_SIZE',
-	
+
 		// Bitwise Logit
 		// -------------
 		'83' => 'OP_INVERT',
@@ -90,7 +90,7 @@ if($script) {
 		'86' => 'OP_XOR',
 		'87' => 'OP_EQUAL', // Returns 1 if the inputs are exactly equal, 0 otherwise.
 		'88' => 'OP_EQUALVERIFY',
-	
+
 		// Arithmetic
 		// ----------
 		'8b' => 'OP_1ADD',
@@ -120,7 +120,7 @@ if($script) {
 		'a3' => 'OP_MIN',
 		'a4' => 'OP_MAX',
 		'a5' => 'OP_WITHIN',
-		
+
 		// Crypto
 		// ------
 		'a6' => 'OP_RIPEMD160',
@@ -133,16 +133,16 @@ if($script) {
 		'ad' => 'OP_CHECKSIGVERIFY',
 		'ae' => 'OP_CHECKMULTISIG',
 		'af' => 'OP_CHECKMULTISIGVERIFY',
-		
+
 		// Locktime
 		'b1' => 'OP_CHECKLOCKTIMEVERIFY',
 		'b2' => 'OP_CHECKSEQUENCEVERIFY',
-		
+
 		// Pseudo-Words
 		'fd' => 'OP_PUBKEYHASH',
 		'fe' => 'OP_PUBKEY',
 		'ff' => 'OP_INVALIDOPCODE',
-		
+
 		// Reserved Words
 		'50' => 'OP_RESERVED',
 		'62' => 'OP_VER',
@@ -167,11 +167,11 @@ if($script) {
 
 		// run through every byte (2 characters)
 		$byte = substr($script, 0, 2);
-		
+
 		// store this byte in opcodes array
 		$lockpieces[] = $byte;
 
-		// now remove that byte from the string	
+		// now remove that byte from the string
 		$script = substr($script, strpos($script, $byte) + strlen($byte));
 
 		// ----------
@@ -187,7 +187,7 @@ if($script) {
 			if (hexdec($byte) >= 1 and hexdec($byte) <= hexdec('4b')) { // $byte indicates the number of bytes
 				$pushbytes = substr($script, 0, hexdec($byte)*2);
 			}
-		
+
 			// 4c, 4d, 4e
 			$pushers = array(
 				'4c' => 1,
@@ -197,7 +197,7 @@ if($script) {
 			if (array_key_exists($byte, $pushers)) {
 				// get the number of bytes to push
 				$bytestopush = substr($script, 0, $pushers[$byte]*2);
-				
+
 				// if no errors
 				if ($bytestopush) {
 					$script = substr($script, strpos($script, $bytestopush) + strlen($bytestopush)); // remove
@@ -208,22 +208,22 @@ if($script) {
 					$pushbytes = '[error]';
 				}
 			}
-			
+
 			// pop that opcode off the end of the array and replace it with the specified number of bytes
 			array_pop($lockpieces);
 			if ($pushbytes) {
 				$lockpieces[] = $pushbytes;
 			}
-			
+
 			// now remove those bytes from the string too
 			if ($pushbytes) {
 				$script = substr($script, strpos($script, $pushbytes) + strlen($pushbytes));
 			}
-		
+
 		}
-		
+
 	}
-	
+
 	// convert the hex values to their corresponding opcodes
 	$i=0;
 	$lockops = [];
@@ -246,7 +246,7 @@ if($script) {
 		$i++;
 	}
 
-	
+
 	// -------------
 	// GET ADDRESSES
 	// -------------
@@ -267,36 +267,36 @@ if($script) {
 		// 2. pubkeyhash (P2PKH): OP_DUP OP_HASH160 <hash160> OP_EQUALVERIFY OP_CHECKSIG
 		if (count($lockops) == 5) {
 			if ($lockops[0] == 'OP_DUP' && $lockops[1] == 'OP_HASH160' && $lockops[3] == 'OP_EQUALVERIFY' && $lockops[4] == 'OP_CHECKSIG') {
-			
+
 				// check the "hash160" is hex and 40 chars
 				if (ctype_xdigit($lockops[2]) && strlen($lockops[2]) == 40) {
 					$addresses[] = hash160_to_address($lockops[2], '00');
 				}
 			}
 		}
-		
+
 		// 3. scripthash (P2SH): OP_HASH160 <hash160> OP_EQUAL
 		if (count($lockops) == 3) {
 			if ($lockops[0] == 'OP_HASH160' && $lockops[2] == 'OP_EQUAL') {
-			
+
 				// check the "hash160" is hex and 40 chars
 				if (ctype_xdigit($lockops[1]) && strlen($lockops[1]) == 40) {
 					$addresses[] = hash160_to_address($lockops[1], '05');
 				}
 			}
 		}
-		
+
 		// 4. <n pubkeys> OP_n OP_CHECKMULTISIG
 		if (array_slice($lockops, -1, 1)[0] == 'OP_CHECKMULTISIG') { // last opcode is op_checkmultisig
 			if (substr(array_slice($lockops, -2, 1)[0], 0, 3) == 'OP_') { // second to last begins with OP_
 				$op_n = preg_replace("/[^0-9]/", '', array_slice($lockops, -2, 1)[0]);
 				$pubkeys = array_slice($lockops, -2-$op_n, $op_n); // get the expected number of pubkeys
 				foreach ($pubkeys as $pubkey) {
-					
+
 					// check that it is a pubkey
 					// example error:
 					// OP_2 OP_FALSE 021d69e2b68c3960903b702af7829fadcd80bd89b158150c85c4a75b2c8cb9c394 OP_2 OP_CHECKMULTISIG
-					
+
 					if (ctype_xdigit($pubkey) && (strlen($pubkey) == 66 or strlen($pubkey) == 130)) {
 						$addresses[] = pubkey_to_address($pubkey);
 					}
@@ -306,6 +306,32 @@ if($script) {
 
 	} // if count($lockops) > 0
 
+	// 5. P2WPKH and P2WSH - 0014{20-bytes} or 0020{32-bytes}
+	// Use '00' version to identify a native segwit transaction
+	if (substr($hex, 0, 2) == '00') { // && (substr($hex, 2, 2) == '14' || substr($hex, 2, 2) == '20')) {
+		// |version|push|witnessprogram|
+		//  00      14   751e76e8199196d454941c45d1b3a323f1433bd6
+		//  00      20   88e2e40cd889901733cb2f922be01199d334f3232a34cffee6143482d8eb6c19
+
+		// [ ] Can remove. Just doing an extra check to make sure we haven't already got an address.
+		if (count($addresses) > 0) {
+			throw new Exception("Already got an address for what looks like a witness scriptpubkey: ".print_r($addresses));
+		}
+
+		// Determine type
+		if (substr($hex, 2, 2) == '14') { // 20-byte witess program (hash160 of a public key)
+			$type = 'P2WPKH';
+			$addresses[] = bech32_address($hex);
+		}
+		elseif (substr($hex, 2, 2) == '20') { // 32-byte witess program (hash256 of a script)
+			$type = 'P2WSH';
+			$addresses[] = bech32_address($hex);
+		}
+		else {
+			throw new Exception("Unknown witness program size: $hex");
+		}
+	}
+
 	// -------
 	// RESULT!
 	// -------
@@ -314,7 +340,7 @@ if($script) {
 		'opcodes' => implode($lockops, ' '),
 		'addresses' => implode($addresses, ', '),
 	);
-	
+
 }
 
 // if script empty

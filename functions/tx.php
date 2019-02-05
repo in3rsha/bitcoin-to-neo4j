@@ -8,7 +8,7 @@
 include_once 'basic.php';
 include_once 'script.php';
 
-function decodeRawTransaction($data) {
+function decoderawtransaction($data) {
 
 	// save the original
 	$raw = $data;
@@ -22,7 +22,7 @@ function decodeRawTransaction($data) {
 		$segwit = false;
 		$array['segwit'] = false;
 	}
-		
+
 	// version
 	$version = substr($data, 0, 8);
 	$array['version'] = hexdec(swapEndian($version));
@@ -30,7 +30,7 @@ function decodeRawTransaction($data) {
 
 
 	// remove segwit flag
-	if ($segwit) { 
+	if ($segwit) {
 		$data = substr($data, 4);
 	}
 
@@ -96,42 +96,42 @@ function decodeRawTransaction($data) {
 	if ($segwit) {
 
 		$witnessdata = ''; // start storing all witness data, so it can be subtracted from full data to get the original txid
-	
+
 		// for each input
 		for ($i=0; $i<$invarint_value; $i++) {
-			
+
 			$witnesshex = ''; // store individual input's witness hex data
 			// 02
 			// 48 3045...901
 			// 21 0382...0ac
-	
+
 			// number of witness elements
 			list($witvarint_full, $witvarint_value, $witvarint_len) = varInt($data);
 			$witnesshex .= $witvarint_full;
 			$data = substr($data, $witvarint_len);
-		
+
 			for ($j=0; $j<$witvarint_value; $j++) {
-			
+
 				// witnessesizes
 				list($witsizevarint_full, $witsizevarint_value, $witsizevarint_len) = varInt($data);
 				$witnesshex .= $witsizevarint_full;
 				$data = substr($data, $witsizevarint_len);
-			
+
 				// witnesses
 				$witnesslength = 2 * $witsizevarint_value;
 				$array['vin'][$i]['witness'][$j] = substr($data, 0, $witnesslength);
 				$witnesshex .= substr($data, 0, $witnesslength);
 				$data = substr($data, $witnesslength);
-	
+
 			}
 
 			$array['vin'][$i]['witness']['hex'] = $witnesshex;
 			$witnessdata .= $witnesshex;
-	
+
 		}
-	
+
 	}
-	
+
 
 	// locktime
 	$locktime = substr($data, 0, 8);
@@ -145,11 +145,11 @@ function decodeRawTransaction($data) {
 		$wtxid = hash("sha256", pack('H*', $raw));
 		$wtxid = hash("sha256", pack('H*', $wtxid));
 		$array['wtxid'] = swapEndian($wtxid);
-	
+
 		// original txid (remove flag and witness data)
 		$withoutflag = substr($raw, 0, 8).substr($raw, 12); // remove flag
 		$txid_orig = str_replace($witnessdata, '', $withoutflag); // remove witness data
-	
+
 		$txid = hash("sha256", pack('H*', $txid_orig));
 		$txid = hash("sha256", pack('H*', $txid));
 		$array['txid'] = swapEndian($txid);

@@ -10,7 +10,7 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 	// ============
 	// CYPHER BUILD
 	// ============
-	$decoded = decodeRawTransaction($transaction); // decode the raw transaction string
+	$decoded = decoderawtransaction($transaction); // decode the raw transaction string
 
 	$size = strlen($transaction)/2; $sizedisplay = str_pad('['. $size .' bytes]', 15, ' ');
 	$relationshipsdisplay = str_pad('('. count($decoded['vin']) .':'. count($decoded['vout']) .')', 7, ' ');
@@ -18,14 +18,14 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 	$t_display = str_pad($t.'.', 5, ' ');
 
 	echo "   $t_display $txid $sizedisplay $relationshipsdisplay ";
-	
+
 	// skip transaction if it already exists in database
 	$check = $neo->run("MATCH (tx :tx {txid:'$txid'}) RETURN tx");
     $exists = $check->size() > 0; // is there a record for this txid?
-    
+
 	if ($exists) {
         $record = $check->getRecord();
-        
+
 		// if this is a coinbase transaction, always merge it to the block (because two coinbase txs can have the same txid)
 		if ($decoded['vin'][0]['txid'] == '0000000000000000000000000000000000000000000000000000000000000000') {
 			$vin_coinbase = $decoded['vin'][0]['scriptSig']['hex']; // miners can put what they like in it
@@ -57,14 +57,14 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 	}
 	// if this transaction doesn't exist in neo4j...
 	else {
-		
+
 		$cypher = '';
 		// ----------
 		// 1. TX node
 		// ----------
 		$version = $decoded['version'];
 		$locktime = $decoded['locktime'];
-		
+
 		// Set segwit property on tx with the value of [marker][flag] if it's a segwit tx
 		if ($decoded['segwit']) {
 			$segwit = $decoded['segwit'];
@@ -73,15 +73,15 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 		else {
 			$setsegwit = '';
 		}
-		
+
 		$cypher .= "
 		MATCH (block :block {hash:'$blockhash'})-[:coinbase]->(coinbase :output:coinbase)
-		MERGE (tx:tx {txid:'$txid', version:$version, locktime:$locktime, size:$size}) 
+		MERGE (tx:tx {txid:'$txid', version:$version, locktime:$locktime, size:$size})
 		WITH tx, block, coinbase
-		$setsegwit 
+		$setsegwit
 		";
-		
-		
+
+
 		// ---------
 		// 2. Inputs
 		// ---------
@@ -89,9 +89,9 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 		$inputs = array(); $inputstack = '';
 		$coinbase = false;
 		$inputcount = count($decoded['vin']);
-		
+
 		foreach ($decoded['vin'] as $vin) {
-			
+
 			// Store new witness data if this is a new Segregated Witness transaction
 			if (array_key_exists('witness', $vin)) {
 				$witness = $vin['witness']['hex'];
@@ -103,44 +103,44 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 				$witnessstack = '';
 				$witnessiterate = '';
 			}
-		
+
 			// If coinbase transaction
 			if ($vin['txid'] == '0000000000000000000000000000000000000000000000000000000000000000') { // the input txid is all zeros for coinbase transactions
 				$coinbase = true;
 				$vin_coinbase = $vin['scriptSig']['hex']; // miners can put what they like in it
 				$vin_sequence = $vin['sequence'];
-				
+
 				$cypher .= "MERGE (coinbase)-[:in {vin:$i, scriptSig:'$vin_coinbase', sequence:'$vin_sequence'}]->(tx) ";
 				break;
 			}
-			
+
 			// If not coinbase transaction
 			else {
 				$vin_txid = $vin['txid'];
 				$vin_vout = $vin['vout'];
 				$vin_scriptSig = $vin['scriptSig']['hex'];
 				$vin_sequence = $vin['sequence'];
-				
+
 				// Prepare a JSON array so that each input can be added using Neo4j's FOREACH
 				$inputs[] = "{vin:$i, index:'$vin_txid:$vin_vout', scriptSig:'$vin_scriptSig', sequence:'$vin_sequence', witness:'$witness'}";
-			
+
 			}
-			
+
 			$i++;
 		}
-		
-		
+
+
 		$inputs = implode(", ", $inputs); // create json of each input array
-		
+
 		// iterate over the json array of inputs
 		$cypher .= "
 			FOREACH (input in [$inputs] |
-				MERGE (in :output {index: input.index}) 
+				MERGE (in :output {index: input.index})
 				MERGE (in)-[:in {vin: input.vin, scriptSig: input.scriptSig, sequence: input.sequence$witnessiterate}]->(tx)
 			)
 			";
 
-		
+
 		// ----------
 		// 3. Outputs
 		// ----------
@@ -152,15 +152,15 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 			$value = $vout['value']; $outtotal += $value;
 			$scriptPubKey = $vout['scriptPubKey']['hex'];
 			$addresses = $vout['scriptPubKey']['addresses'];
-			
+
 			// Prepare a JSON array so that each output can be added using Neo4j's FOREACH
 			$outputs[] = "{vout:$i, index:'$txid:$i', value:$value, scriptPubKey:'$scriptPubKey', addresses:'$addresses'}";
-			
+
 			$i++;
 		}
-		
+
 		$outputs = implode(", ", $outputs); // create json of each input array
-		
+
 		// 1. MAIN: Iterate over the json array of outputs
 		//   This uses the foreach hack to only create an address node if the address value is not an empty string
 		//   If output is placeholder, it didn't have a value. Increase fee for the tx it's an input for.
@@ -181,18 +181,18 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 					out.value= output.value,
 					out.scriptPubKey= output.scriptPubKey,
 					existing.fee = existing.fee + output.value
-				
+
 			)
 			";
 
-		
+
 		// --------
 		// 4. Block
 		// --------
 		$cypher .= "
-		MERGE (tx)-[:inc {i:$t}]->(block) 
+		MERGE (tx)-[:inc {i:$t}]->(block)
 		";
-		
+
 		// ----------
 		// 5. Set Fee (and return fee info)
 		// ----------
@@ -203,7 +203,7 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 		SET tx.fee=fee
 		RETURN fee
 		";
-		
+
 		// ==========
 		// CYPHER RUN
 		// ==========
@@ -218,7 +218,7 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 			}
 			// Echo the error, then wait a second before trying again.
 			catch (Exception $e) {
-				echo '$neo->run($cypher) exception'.PHP_EOL;	
+				echo '$neo->run($cypher) exception'.PHP_EOL;
 				sleep(1);
 			}
 		}
@@ -227,9 +227,9 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 		$record = $result->getRecord();
 		$fee = $record->get('fee');
 		echo "fee: $fee";
-			
+
 		return $fee;
-	
+
 	}
 
 }
