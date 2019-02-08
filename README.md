@@ -43,38 +43,22 @@ sudo apt update
 sudo apt install oracle-java8-installer
 
 wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
-echo 'deb http://debian.neo4j.org/repo stable/' >/tmp/neo4j.list
-sudo mv /tmp/neo4j.list /etc/apt/sources.list.d
-sudo apt update
-sudo apt install neo4j
+echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee /etc/apt/sources.list.d/neo4j.list
+sudo apt update && sudo apt install neo4j
 ```
 
-3. **[PHP 7.0+](http://php.net/)** - The main script and it's library functions are written in PHP.
+3. **[PHP 7.2+](http://php.net/)** - The main script and it's library functions are written in PHP.
 
 ```bash
 # The extra php7.0-* libraries are needed for this script to run.
-sudo apt install php7.0 php7.0-dev php7.0-gmp php7.0-curl php7.0-bcmath php7.0-mbstring
+sudo apt install php7.2 php7.2-dev php7.2-gmp php7.2-curl php7.2-bcmath php7.2-mbstring
 ```
 
-4. **[Redis 3.2+](https://redis.io/)** - This is used for storing the state of the import, so that the script can be stopped and started at any time.
+4. **[Redis 5.0.3+](https://redis.io/)** - This is used for storing the state of the import, so that the script can be stopped and started at any time.
 
 ```bash
 sudo apt install build-essential
-
-cd /usr/local/share
-sudo wget http://download.redis.io/releases/redis-stable.tar.gz
-sudo tar -xvzf redis-stable.tar.gz 
-sudo rm redis-stable.tar.gz
-
-cd redis-stable
-cd deps
-sudo make geohash-int jemalloc lua hiredis linenoise
-cd ..
-sudo make
-sudo make install
-
-cd utils
-sudo ./install_server.sh
+sudo apt install redis-server
 ```
 
 ### Dependencies.
@@ -92,25 +76,8 @@ composer install
 This allows PHP to connect to Redis. These instructions should install the version needed for _PHP7_ (which is different to the default installation instructions that come with phpredis, which is aimed at PHP5).
 
 ```bash
-# This is needed for phpize (used in a moment)
-sudo apt install php7.0-dev
-
 # Install phpredis
-cd /usr/local/share
-sudo wget https://github.com/phpredis/phpredis/archive/php7.zip 
-sudo unzip php7.zip
-sudo rm php7.zip
-
-cd phpredis-php7/
-sudo phpize
-sudo make
-sudo make install
-
-# Install mod
-sudo touch /etc/php/7.0/mods-available/redis.ini
-sudo bash -c "echo extension=redis.so > /etc/php/7.0/mods-available/redis.ini"
-sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/20-redis.ini
-
+sudo apt install php-redis
 ```
 
 ### Config.
@@ -157,6 +124,7 @@ The script sets the following keys in Redis:
 * `bitcoin-to-neo4j` - This stores the number of the current blk.dat file, and it's position in that file.
 * `bitcoin-to-neo4j:orphans` - This stores the blockhashes of orphan blocks. You see, the blocks in the blk.dat files are not stored in order (based on their height), so by saving blocks that we cannot calculate a height for yet (because we haven't encountered the block it builds upon), we are able set the height later on.
 * `bitcoin-to-neo4j:tip` - This is the height of the current longest chain we have got in Neo4j. It's not needed for the script to work, but it's useful for seeing the progress of the script.
+* `bitcoin-to-neo4j:log` - Logs showing the amount of time that the blkXXXXX.dat files took to be imported.
 
 When Redis is installed, you can look at each of these with:
 
@@ -164,6 +132,7 @@ When Redis is installed, you can look at each of these with:
 redis-cli hgetall bitcoin-to-neo4j
 redis-cli hgetall bitcoin-to-neo4j:orphans
 redis-cli hgetall bitcoin-to-neo4j:tip
+redis-cli hgetall bitcoin-to-neo4j:log
 ```
 
 ## FAQ
