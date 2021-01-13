@@ -97,6 +97,17 @@ RETURN path
 
 This query allows you to see if two address are connected by a series of transactions. It also returns a path if there are common intermediary addresses.
 
+### Between Addresses (Multiple Paths)
+
+```
+MATCH (start :address {address:'$address1'}), (end :address {address:'$address2'})
+MATCH path=allShortestPaths( (start)-[:in|:out|:locked*]-(end) )
+RETURN path
+LIMIT 5
+```
+
+This is the most interesting query if you're looking to visualize all the connections between two addresses. It's best to start with a low `LIMIT` (i.e. small number of paths) and go from there.
+
 ## Historical Analyses
 
 ### First Transctions
