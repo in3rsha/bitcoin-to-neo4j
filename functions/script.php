@@ -335,11 +335,6 @@ if($script) {
 	// -------
 	// RESULT!
 	// -------
-	// $result = array(
-	// 	'hex' => $hex,
-	// 	'opcodes' => implode($lockops, ' '),
-	// 	'addresses' => implode($addresses, ', '),
-	// );
 	$result = array(
 		'hex' => $hex,
 		'opcodes' => implode(' ', $lockops),

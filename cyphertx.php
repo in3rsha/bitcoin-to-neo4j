@@ -21,7 +21,6 @@ function cypherTx($neo, $transaction, $t, $blockhash) {
 
 	// skip transaction if it already exists in database
 	$check = $neo->run("MATCH (tx :tx {txid:'$txid'}) RETURN tx");
-    // $exists = $check->size() > 0; // is there a record for this txid?
 	$exists = iterator_count($check) > 0; // is there a record for this txid?
 
 	if ($exists) {
