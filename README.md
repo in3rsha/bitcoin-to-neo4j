@@ -35,7 +35,7 @@ sudo apt update
 sudo apt install bitcoind
 ```
 
-2. **[Neo4j 3.0+](https://neo4j.com/)**
+2. **[Neo4j 4.0+](https://neo4j.com/)**
 
 ```bash
 sudo add-apt-repository ppa:webupd8team/java
@@ -47,11 +47,11 @@ echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee /etc/apt/sources.lis
 sudo apt update && sudo apt install neo4j
 ```
 
-3. **[PHP 7.2+](http://php.net/)** - The main script and it's library functions are written in PHP.
+3. **[PHP 8.0+](http://php.net/)** - The main script and it's library functions are written in PHP.
 
 ```bash
 # The extra php7.0-* libraries are needed for this script to run.
-sudo apt install php7.2 php7.2-dev php7.2-gmp php7.2-curl php7.2-bcmath php7.2-mbstring
+sudo apt install php php-dev php-gmp php-curl php-bcmath php-mbstring
 ```
 
 4. **[Redis 5.0.3+](https://redis.io/)** - This is used for storing the state of the import, so that the script can be stopped and started at any time.
@@ -63,7 +63,7 @@ sudo apt install redis-server
 
 ### Dependencies.
 
-**1. [neo4j-php-client](https://github.com/graphaware/neo4j-php-client)** (install via [composer](https://getcomposer.org/doc/00-intro.md)).
+**1. [neo4j-php-client](https://github.com/neo4j-php/neo4j-php-client)** (install via [composer](https://getcomposer.org/doc/00-intro.md)).
 
 This is the driver that allows PHP to connect to your Neo4j database. I have included a `composer.json` file, so navigate to the project's home directory and install it with:
 

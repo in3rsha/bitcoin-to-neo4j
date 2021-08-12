@@ -16,13 +16,25 @@ $redis->connect(REDIS_IP, REDIS_PORT);
 
 // Composer
 require_once 'vendor/autoload.php';
-use GraphAware\Neo4j\Client\ClientBuilder;  // (graphaware/neo4j-php-client)
+
+use Laudis\Neo4j\Authentication\Authenticate;
+use Laudis\Neo4j\ClientBuilder; // (neo4j-php/neo4j-php-client)
+
 
 // Neo4j
 $neo = ClientBuilder::create()
-                    ->addConnection('default', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT)
-                    ->setDefaultTimeout(0)
-                    ->build(); // NOTE: set timeout to 0 (so it does not timeout on huge transactions)
+                    ->withDriver('bolt', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP) // creates a bolt driver
+                    ->withDefaultDriver('bolt')
+                    ->build();
+
+
+// Annoying hack to avoid existing constraint/index errors below. This is 
+// clearly not the right way to do this, but it seems to work.
+$neo->run("DROP CONSTRAINT ON (b:block) ASSERT b.hash IS UNIQUE");
+$neo->run("DROP CONSTRAINT ON (t:tx) ASSERT t.txid IS UNIQUE");
+$neo->run("DROP CONSTRAINT ON (o:output) ASSERT o.index IS UNIQUE");
+$neo->run("DROP INDEX ON :block(height)");
+$neo->run("DROP INDEX ON :address(address)"); 
 
 // Create Neo4j constraints (for unique indexes, not regular indexes (should be faster))
 $neo->run("CREATE CONSTRAINT ON (b:block) ASSERT b.hash IS UNIQUE");
@@ -192,7 +204,7 @@ while(true) { // Keep trying to read files forever
         // a. Create the new block, or add properties to it if we've already made a placeholder for it.
         $createblock = "
         MERGE (block:block {hash:'$blockhash'})
-        CREATE UNIQUE (block)-[:coinbase]->(:output:coinbase)
+        CREATE (block)-[:coinbase]->(:output:coinbase)
         SET
             block.size=$blocksize,
             block.txcount=$txcount,
@@ -230,12 +242,11 @@ while(true) { // Keep trying to read files forever
         // ------------------
 
         // Get the height
-        foreach ($run->records() as $record) {
+        foreach ($run as $record) {
             $height = $record->get('height');
             echo $height;
             $prevblock = $record->get('prevblock');
         }
-
         // If we have a height for this block, set value for coinbase input.
         if ($height !== NULL) {
             $blockreward = calculateBlockReward($height);
@@ -273,7 +284,7 @@ while(true) { // Keep trying to read files forever
             ");
 
             // Get the array of blocks to be populated
-            foreach ($chainabove->records() as $record) {
+            foreach ($chainabove as $record) {
                 $chainabove = $record->get('chainabove');
             };
 
@@ -288,11 +299,11 @@ while(true) { // Keep trying to read files forever
                 RETURN block
                 ");
 
-                foreach ($orphanrun->records() as $record) {
+                foreach ($orphanrun as $record) {
                     $orphanblock = $record->get('block');
                 }
-                $orphanheight = $orphanblock->value('height');
-                $orphanprevblock = $orphanblock->value('prevblock');
+                $orphanheight = $orphanblock['properties']->get('height');
+                $orphanprevblock = $orphanblock['properties']->get('prevblock');
 
                 echo "$orphanheight\n";
 
