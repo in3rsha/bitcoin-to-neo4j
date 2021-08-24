@@ -23,25 +23,24 @@ use Laudis\Neo4j\ClientBuilder; // (neo4j-php/neo4j-php-client)
 
 // Neo4j
 $neo = ClientBuilder::create()
-                    ->withDriver('bolt', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP) // creates a bolt driver
+                    ->withDriver('bolt', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT) // creates a bolt driver
                     ->withDefaultDriver('bolt')
                     ->build();
 
-
-// Annoying hack to avoid existing constraint/index errors below. This is 
-// clearly not the right way to do this, but it seems to work.
-$neo->run("DROP CONSTRAINT ON (b:block) ASSERT b.hash IS UNIQUE");
-$neo->run("DROP CONSTRAINT ON (t:tx) ASSERT t.txid IS UNIQUE");
-$neo->run("DROP CONSTRAINT ON (o:output) ASSERT o.index IS UNIQUE");
-$neo->run("DROP INDEX ON :block(height)");
-$neo->run("DROP INDEX ON :address(address)"); 
+// Check Neo4j is running
+try {
+    $neo->run("SHOW DATABASES");
+} catch (\Throwable $th) {
+    echo "Doesn't look like Neo4j is running or available yet. If you've just started Neo4j, give it a few moments.".PHP_EOL;
+    exit;
+}
 
 // Create Neo4j constraints (for unique indexes, not regular indexes (should be faster))
-$neo->run("CREATE CONSTRAINT ON (b:block) ASSERT b.hash IS UNIQUE");
-$neo->run("CREATE CONSTRAINT ON (t:tx) ASSERT t.txid IS UNIQUE");
-$neo->run("CREATE CONSTRAINT ON (o:output) ASSERT o.index IS UNIQUE");
-$neo->run("CREATE INDEX ON :block(height)");
-$neo->run("CREATE INDEX ON :address(address)"); // for getting outputs locked to an address
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (b:block) ASSERT b.hash IS UNIQUE");
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (t:tx) ASSERT t.txid IS UNIQUE");
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (o:output) ASSERT o.index IS UNIQUE");
+$neo->run("CREATE INDEX IF NOT EXISTS FOR (b:block) ON (b.height)");
+$neo->run("CREATE INDEX IF NOT EXISTS FOR (a:address) ON (a.address)"); // for getting outputs locked to an address
 
 // Functions
 include('functions/tx.php');        // decode transaction
@@ -204,7 +203,7 @@ while(true) { // Keep trying to read files forever
         // a. Create the new block, or add properties to it if we've already made a placeholder for it.
         $createblock = "
         MERGE (block:block {hash:'$blockhash'})
-        CREATE (block)-[:coinbase]->(:output:coinbase)
+        MERGE (block)-[:coinbase]->(:output:coinbase)
         SET
             block.size=$blocksize,
             block.txcount=$txcount,
