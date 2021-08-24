@@ -50,7 +50,7 @@ sudo apt update && sudo apt install neo4j
 3. **[PHP 8.0+](http://php.net/)** - The main script and it's library functions are written in PHP.
 
 ```bash
-# The extra php7.0-* libraries are needed for this script to run.
+# The following php-* libraries are required for this script to run
 sudo apt install php php-dev php-gmp php-curl php-bcmath php-mbstring
 ```
 
