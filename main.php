@@ -17,20 +17,19 @@ $redis->connect(REDIS_IP, REDIS_PORT);
 // Composer
 require_once 'vendor/autoload.php';
 
-use Laudis\Neo4j\Authentication\Authenticate;
+// Neo4j
 use Laudis\Neo4j\ClientBuilder; // (neo4j-php/neo4j-php-client)
 
-
-// Neo4j
 $neo = ClientBuilder::create()
-                    ->withDriver('bolt', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT) // creates a bolt driver
-                    ->withDefaultDriver('bolt')
-                    ->build();
+    ->withDriver('bolt', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT) // creates a bolt driver
+    ->withDefaultDriver('bolt')
+    ->build();
 
 // Check Neo4j is running
 try {
     $neo->run("SHOW DATABASES");
-} catch (\Throwable $th) {
+}
+catch (\Throwable $th) {
     echo "Doesn't look like Neo4j is running or available yet. If you've just started Neo4j, give it a few moments.".PHP_EOL;
     exit;
 }
@@ -41,6 +40,12 @@ $neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (t:tx) ASSERT t.txid IS UNIQUE");
 $neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (o:output) ASSERT o.index IS UNIQUE");
 $neo->run("CREATE INDEX IF NOT EXISTS FOR (b:block) ON (b.height)");
 $neo->run("CREATE INDEX IF NOT EXISTS FOR (a:address) ON (a.address)"); // for getting outputs locked to an address
+
+// Cypher Queries
+$cypher['tx']            = file_get_contents("cypher/tx.cypher");
+$cypher['tx-coinbase']   = file_get_contents("cypher/tx-coinbase.cypher");
+$cypher['block']         = file_get_contents("cypher/block.cypher");
+$cypher['block-genesis'] = file_get_contents("cypher/block-genesis.cypher");
 
 // Functions
 include('functions/tx.php');        // decode transaction
@@ -200,41 +205,28 @@ while(true) { // Keep trying to read files forever
         $blocksizekb = number_format($blocksize/1000, 2);
         echo " $b: $blockhash [$blocksizekb kb] (fp:$fp) ";
 
-        // a. Create the new block, or add properties to it if we've already made a placeholder for it.
-        $createblock = "
-        MERGE (block:block {hash:'$blockhash'})
-        MERGE (block)-[:coinbase]->(:output:coinbase)
-        SET
-            block.size=$blocksize,
-            block.txcount=$txcount,
-            block.version=$version,
-            block.prevblock='$prevblock',
-            block.merkleroot='$merkleroot',
-            block.time=$timestamp,
-            block.bits='$bits',
-            block.nonce=$nonce
-        ";
-
-        // IF GENESIS BLOCK - Do not try and create a chain to previous block
-        if ($prevblock == '0000000000000000000000000000000000000000000000000000000000000000') {
-            $createchain = "
-            SET block.height=0
-            RETURN block.height as height, block.prevblock as prevblock
-            ";
+        // Select Cypher Query
+        if ($prevblock == '0000000000000000000000000000000000000000000000000000000000000000') { // Genesis Block
+            $query = $cypher['block-genesis'];
         }
-        // NOT GENESIS BLOCK - Create chain to previous block (sets placeholder if we haven't got it, because blocks in blk.dat files are not always in order of height)
         else {
-            $createchain = "
-            MERGE (prevblock:block {hash:'$prevblock'})
-            MERGE (block)-[:chain]->(prevblock)
-            SET block.height=prevblock.height+1
-            RETURN block.height as height, block.prevblock as prevblock
-            ";
+            $query = $cypher['block'];
         }
 
-        // Save this block to neo4j
-        $query = "$createblock $createchain";
-        $run = $neo->run($query);
+        // Save this block to Neo4j
+        $run = $neo->run($query,
+        [
+            'blockhash'  => $blockhash,
+            'blocksize'  => $blocksize,
+            'txcount'    => $txcount,
+            'version'    => $version,
+            'prevblock'  => $prevblock,
+            'merkleroot' => $merkleroot,
+            'timestamp'  => $timestamp,
+            'bits'       => $bits,
+            'nonce'      => $nonce
+        ]
+        );
 
         // ------------------
         // HEIGHT BASED STUFF
@@ -250,10 +242,15 @@ while(true) { // Keep trying to read files forever
         if ($height !== NULL) {
             $blockreward = calculateBlockReward($height);
 
-            $neo->run("
-            MATCH (block :block {hash:'$blockhash'})-[:coinbase]->(coinbase :output:coinbase)
+            $neo->run('
+            MATCH (block :block {hash:$blockhash})-[:coinbase]->(coinbase :output:coinbase)
             SET coinbase.value=$blockreward
-            ");
+            ',
+            [
+                'blockhash' => $blockhash,
+                'blockreward' => $blockreward,
+            ]
+            );
 
         }
 
@@ -277,10 +274,14 @@ while(true) { // Keep trying to read files forever
             echo "\n  Parent block! Updating block height, coinbase values and coinbase tx fees for blocks above it...\n";
 
             // Get all the blocks that are chained to this one (above it)
-            $chainabove = $neo->run("
-            MATCH (dependency :block {hash:'$blockhash'})<-[:chain*]-(blocks :block)
+            $chainabove = $neo->run('
+            MATCH (dependency :block {hash:$blockhash})<-[:chain*]-(blocks :block)
             RETURN collect(blocks.hash) as chainabove
-            ");
+            ',
+            [
+                'blockhash' => $blockhash
+            ]
+            );
 
             // Get the array of blocks to be populated
             foreach ($chainabove as $record) {
@@ -292,11 +293,15 @@ while(true) { // Keep trying to read files forever
             foreach ($chainabove as $orphan) {
                 echo "    $orphan ";
 
-                $orphanrun = $neo->run("
-                MATCH (block :block {hash:'$orphan'})-[:chain]->(prevblock :block)
+                $orphanrun = $neo->run('
+                MATCH (block :block {hash:$orphan})-[:chain]->(prevblock :block)
                 SET block.height=prevblock.height+1
                 RETURN block
-                ");
+                ',
+                [
+                    'orphan' => $orphan,
+                ]
+                );
 
                 foreach ($orphanrun as $record) {
                     $orphanblock = $record->get('block');
@@ -310,12 +315,17 @@ while(true) { // Keep trying to read files forever
                 $blockreward = calculateBlockReward($orphanheight);
 
                 // Update coinbase and fee (if the coinbase input value has not been set)
-                $coinbaserun = $neo->run("
-                MATCH (block :block {hash:'$orphan'})-[:coinbase]->(coinbase :output:coinbase)-[:in]->(tx :tx)
+                $coinbaserun = $neo->run('
+                MATCH (block :block {hash:$orphan})-[:coinbase]->(coinbase :output:coinbase)-[:in]->(tx :tx)
                 WHERE NOT exists(coinbase.value)
                 SET coinbase.value=$blockreward
                 SET tx.fee= tx.fee + $blockreward
-                ");
+                ',
+                [
+                    'orphan'      => $orphan,
+                    'blockreward' => $blockreward,
+                ]
+                );
 
                 // Keep log of heights that have been added
                 $heights[$orphan] = $orphanheight;
@@ -367,7 +377,7 @@ while(true) { // Keep trying to read files forever
             // CYPHER TX INSERT
             // ----------------
             $tx_start =  microtime(true);
-            cypherTx($neo, $transaction, $t, $blockhash); // IMPORT THE TRANSACTION IN TO NEO4J! (using functions/cyphertx.php)
+            cypherTx($neo, $transaction, $t, $blockhash, $cypher); // IMPORT THE TRANSACTION IN TO NEO4J! (using functions/cyphertx.php)
             $tx_time = microtime(true)-$tx_start;
 
             // Display the time it took to insert transaction
