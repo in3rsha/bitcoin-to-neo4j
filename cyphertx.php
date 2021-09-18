@@ -21,10 +21,9 @@ function cypherTx($neo, $transaction, $t, $blockhash, $cypher) {
 
 	// skip transaction if it already exists in database
 	$check = $neo->run('MATCH (tx :tx {txid:$txid}) RETURN tx', ['txid' => $txid]);
-	$exists = iterator_count($check) > 0; // is there a record for this txid?
+	$exists = !$check->isEmpty(); // is there a record for this txid?
 
 	if ($exists) {
-		$record = $check;
 
 		// if this is a coinbase transaction, always merge it to the block (because two coinbase txs can have the same txid)
 		if ($decoded['vin'][0]['txid'] == '0000000000000000000000000000000000000000000000000000000000000000') {
@@ -134,7 +133,7 @@ function cypherTx($neo, $transaction, $t, $blockhash, $cypher) {
 		// 3. Outputs
 		// ----------
 		$i=0;
-		$outputs = []; $outputstack = ''; $addressiterate = [];
+		$outputs = [];
 		$outtotal = 0; // keep track of output values (for calculating fee later)
 
 		foreach ($decoded['vout'] as $vout) {
@@ -186,8 +185,7 @@ function cypherTx($neo, $transaction, $t, $blockhash, $cypher) {
 		}
 
 		// Get the fee (just to check) (Note: The fee will be negative if the inputs for this transaction are not in Neo4j yet, which is cool.)
-		$record = $result[0];
-		$fee = $record->get('fee');
+		$fee = $result->first()->get('fee');
 		echo "fee: $fee";
 
 		return $fee;

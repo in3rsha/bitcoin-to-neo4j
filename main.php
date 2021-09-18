@@ -67,8 +67,8 @@ if (!file_exists(BLOCKS)) {
 // READ THE BLOCKCHAIN
 //--------------------
 
-$start = $redis->hGet('bitcoin-to-neo4j', 'blk.dat') ?: 0; // which blk.dat file to start with
-$startfp = $redis->hGet('bitcoin-to-neo4j', 'fp') ?: 0; // Zero if not set
+$start = $redis->hget('bitcoin-to-neo4j', 'blk.dat') ?: 0; // which blk.dat file to start with
+$startfp = $redis->hget('bitcoin-to-neo4j', 'fp') ?: 0; // Zero if not set
 
 while(true) { // Keep trying to read files forever
 
@@ -81,7 +81,7 @@ while(true) { // Keep trying to read files forever
     $b = 1; // for counting the blocks in each file
 
     // keep track of which blk.dat file we are on (store it in Redis)
-    $redis->hSet('bitcoin-to-neo4j', 'blk.dat', $start);
+    $redis->hset('bitcoin-to-neo4j', 'blk.dat', $start);
 
     while(true) { // Read through a blk*.dat file
 
@@ -92,7 +92,7 @@ while(true) { // Keep trying to read files forever
         $fp = ftell($fh);
 
         // store file pointer in redis (only after a block has been fully ran through)
-        $redis->hSet('bitcoin-to-neo4j', 'fp', $fp);
+        $redis->hset('bitcoin-to-neo4j', 'fp', $fp);
 
         // =====
         // BLOCK
@@ -262,7 +262,7 @@ while(true) { // Keep trying to read files forever
             $redis->hset("bitcoin-to-neo4j:orphans", $prevblock, $blockhash);
 
             // print out how many orphan blocks we have saved in Redis
-            echo '  - blocks needed = '.$redis->hLen('bitcoin-to-neo4j:orphans')."\n";
+            echo '  - blocks needed = '.$redis->hlen('bitcoin-to-neo4j:orphans')."\n";
         }
 
         // ----------
@@ -306,8 +306,8 @@ while(true) { // Keep trying to read files forever
                 foreach ($orphanrun as $record) {
                     $orphanblock = $record->get('block');
                 }
-                $orphanheight = $orphanblock['properties']->get('height');
-                $orphanprevblock = $orphanblock['properties']->get('prevblock');
+                $orphanheight = $orphanblock->properties()->get('height');
+                $orphanprevblock = $orphanblock->properties()->get('prevblock');
 
                 echo "$orphanheight\n";
 
@@ -400,7 +400,7 @@ while(true) { // Keep trying to read files forever
     // log that the file has been done
     $dat_end = microtime(true); $dat_time = number_format(($dat_end-$dat_start)/60, 2);
     $b--;
-    $redis->hSet('bitcoin-to-neo4j:log', $file, "[$b] $dat_time mins");
+    $redis->hset('bitcoin-to-neo4j:log', $file, "[$b] $dat_time mins");
 
 
 } // Infinite Loop
