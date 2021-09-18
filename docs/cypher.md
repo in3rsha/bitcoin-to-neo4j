@@ -76,8 +76,10 @@ _Note: An unspent output is one that has not been included as an input in anothe
 ![](images/path_output.png)
 
 ```
-MATCH (start :output {index:'$txid:vout'}), (end :output {index:'$txid:out'})
-MATCH path=shortestPath( (start)-[:in|:out*]-(end) )
+MATCH (start :output {index:'$txid:vout'})
+WITH start
+MATCH (end :output {index:'$txid:vout'})
+MATCH path=shortestPath( (start)-[:in|out*1..100]-(end) )
 RETURN path
 ```
 
@@ -90,8 +92,10 @@ _Note: Each output has a unique index property, which is a combination of the ID
 ![](images/path_address.png)
 
 ```
-MATCH (start :address {address:'$address1'}), (end :address {address:'$address2'})
-MATCH path=shortestPath( (start)-[:in|:out|:locked*]-(end) )
+MATCH (start :address {address:'$address1'})
+WITH start
+MATCH (end :address {address:'$address2'})
+MATCH path=shortestPath( (start)-[:in|out|locked*1..100]-(end) )
 RETURN path
 ```
 
@@ -100,8 +104,10 @@ This query allows you to see if two address are connected by a series of transac
 ### Between Addresses (Multiple Paths)
 
 ```
-MATCH (start :address {address:'$address1'}), (end :address {address:'$address2'})
-MATCH path=allShortestPaths( (start)-[:in|:out|:locked*]-(end) )
+MATCH (start :address {address:'$address1'})
+WITH start
+MATCH (end :address {address:'$address2'})
+MATCH path=allShortestPaths( (start)-[:in|out|locked*1..100]-(end) )
 RETURN path
 LIMIT 5
 ```
