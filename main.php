@@ -35,9 +35,9 @@ catch (\Throwable $th) {
 }
 
 // Create Neo4j constraints (for unique indexes, not regular indexes (should be faster))
-$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (b:block) ASSERT b.hash IS UNIQUE");
-$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (t:tx) ASSERT t.txid IS UNIQUE");
-$neo->run("CREATE CONSTRAINT IF NOT EXISTS ON (o:output) ASSERT o.index IS UNIQUE");
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS FOR (b:block) REQUIRE b.hash IS UNIQUE");
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS FOR (t:tx) REQUIRE t.txid IS UNIQUE");
+$neo->run("CREATE CONSTRAINT IF NOT EXISTS FOR (o:output) REQUIRE o.index IS UNIQUE");
 $neo->run("CREATE INDEX IF NOT EXISTS FOR (b:block) ON (b.height)");
 $neo->run("CREATE INDEX IF NOT EXISTS FOR (a:address) ON (a.address)"); // for getting outputs locked to an address
 
@@ -54,7 +54,7 @@ include('functions/readtx.php');    // read single transaction size quickly
 include('cyphertx.php');            // insert tx in to neo4j
 
 // Handy Functions
-function blk00000($i) { return 'blk'.str_pad($i, 5, '0', STR_PAD_LEFT).'.dat'; }
+function blk00000($i): string { return 'blk'.str_pad($i, 5, '0', STR_PAD_LEFT).'.dat'; }
 
 // ---------
 // PRE-CHECK
@@ -69,6 +69,8 @@ if (!file_exists(BLOCKS)) {
 
 $start = $redis->hget('bitcoin-to-neo4j', 'blk.dat') ?: 0; // which blk.dat file to start with
 $startfp = $redis->hget('bitcoin-to-neo4j', 'fp') ?: 0; // Zero if not set
+
+if (!extension_loaded("gmp")) throw new \Error("PHP GMP extension is not installed.");
 
 while(true) { // Keep trying to read files forever
 
@@ -316,10 +318,10 @@ while(true) { // Keep trying to read files forever
 
                 // Update coinbase and fee (if the coinbase input value has not been set)
                 $coinbaserun = $neo->run('
-                MATCH (block :block {hash:$orphan})-[:coinbase]->(coinbase :output:coinbase)-[:in]->(tx :tx)
-                WHERE NOT exists(coinbase.value)
-                SET coinbase.value=$blockreward
-                SET tx.fee= tx.fee + $blockreward
+                MATCH (block:block {hash:$orphan})-[:coinbase]->(coinbase:output:coinbase)-[:in]->(tx:tx)
+                WHERE coinbase.value IS NULL
+                SET coinbase.value = $blockreward
+                SET tx.fee = tx.fee + $blockreward
                 ',
                 [
                     'orphan'      => $orphan,
