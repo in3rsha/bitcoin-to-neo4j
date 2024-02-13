@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="720"
+   height="300"
+   viewBox="0 0 720.00001 300.00001"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="transaction.svg"
+   inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker18122"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path17873"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path17870"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8803"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path8805"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker7930"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path7932"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Send"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4392"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-8"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4386-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4386"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker7930-0"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path7932-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="266.15441"
+     inkscape:cy="148.57143"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-752.36216)">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 400.00001,896.36217 165,0"
+       id="path7114"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#999999;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.21602786;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect7076"
+       width="48.641113"
+       height="48.641113"
+       x="361.03659"
+       y="873.82739"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ff6600;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.21602786;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect7076-3"
+       width="48.641113"
+       height="48.641113"
+       x="541.03662"
+       y="873.82739"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 501.42858,896.36217 0,82.14286 63.57143,0"
+       id="path7116"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ff6600;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.21602786;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect7076-3-5"
+       width="48.641113"
+       height="48.641113"
+       x="541.03662"
+       y="953.82739"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="374.12485"
+       y="904.51819"
+       id="text7118"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan7120"
+         x="374.12485"
+         y="904.51819">50</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="554.12488"
+       y="904.51819"
+       id="text7118-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan7120-8"
+         x="554.12488"
+         y="904.51819">40</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="554.12488"
+       y="984.51819"
+       id="text7118-0-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan7120-8-7"
+         x="554.12488"
+         y="984.51819">10</tspan></text>
+    <g
+       transform="matrix(0.01785714,0,0,-0.01785714,555.42859,880.3622)"
+       id="g2991"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         d="m 704,512 q 0,53 -37.5,90.5 Q 629,640 576,640 523,640 485.5,602.5 448,565 448,512 q 0,-37 19,-67 19,-30 51,-47 L 449,169 q -5,-15 5,-28 10,-13 26,-13 l 192,0 q 16,0 26,13 10,13 5,28 l -69,229 q 32,17 51,47 19,30 19,67 z m -384,256 512,0 0,192 q 0,106 -75,181 -75,75 -181,75 -106,0 -181,-75 -75,-75 -75,-181 l 0,-192 z m 832,-96 0,-576 Q 1152,56 1124,28 1096,0 1056,0 L 96,0 Q 56,0 28,28 0,56 0,96 l 0,576 q 0,40 28,68 28,28 68,28 l 32,0 0,192 q 0,184 132,316 132,132 316,132 184,0 316,-132 132,-132 132,-316 l 0,-192 32,0 q 40,0 68,-28 28,-28 28,-68 z"
+         id="path2993"
+         inkscape:connector-curvature="0"
+         style="fill:currentColor" />
+    </g>
+    <g
+       transform="matrix(0.01785714,0,0,-0.01785714,555.42859,960.3622)"
+       id="g2991-4"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         d="m 704,512 q 0,53 -37.5,90.5 Q 629,640 576,640 523,640 485.5,602.5 448,565 448,512 q 0,-37 19,-67 19,-30 51,-47 L 449,169 q -5,-15 5,-28 10,-13 26,-13 l 192,0 q 16,0 26,13 10,13 5,28 l -69,229 q 32,17 51,47 19,30 19,67 z m -384,256 512,0 0,192 q 0,106 -75,181 -75,75 -181,75 -106,0 -181,-75 -75,-75 -75,-181 l 0,-192 z m 832,-96 0,-576 Q 1152,56 1124,28 1096,0 1056,0 L 96,0 Q 56,0 28,28 0,56 0,96 l 0,576 q 0,40 28,68 28,28 68,28 l 32,0 0,192 q 0,184 132,316 132,132 316,132 184,0 316,-132 132,-132 132,-316 l 0,-192 32,0 q 40,0 68,-28 28,-28 28,-68 z"
+         id="path2993-9"
+         inkscape:connector-curvature="0"
+         style="fill:currentColor" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="599.61548"
+       y="939.30957"
+       id="text7166-8-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan7168-2-2"
+         x="599.61548"
+         y="939.30957"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:Hack;-inkscape-font-specification:Hack;fill:#4d4d4d">lock<tspan
+   style="font-size:12.5px;fill:#999999"
+   id="tspan7888" /></tspan><tspan
+         sodipodi:role="line"
+         x="599.61548"
+         y="955.56769"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:Hack;-inkscape-font-specification:Hack;fill:#4d4d4d"
+         id="tspan8799"><tspan
+           style="font-size:12.5px;fill:#999999"
+           id="tspan8801">(scriptPubKey)</tspan></tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker7930)"
+       d="m 596.42858,937.07646 -17.85714,7.14286"
+       id="path7890"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       transform="matrix(0.06484078,0,0,0.06484078,396.14543,880.22433)"
+       id="g8125"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         d="M 205.017,341.995 172.851,309.834 283.542,199.133 c 40.217,21.676 91.214,15.992 125.209,-17.947 41.406,-41.462 41.406,-108.687 0,-150.091 -41.458,-41.46 -108.688,-41.46 -150.149,0 -33.937,33.941 -39.593,84.999 -17.931,125.157 L 22.751,374.216 c -11.803,11.789 -11.803,31.097 0,42.881 11.785,11.789 31.097,11.789 42.881,0 l 32.161,32.165 c 5.927,5.923 15.521,5.923 21.443,0 l 21.443,-21.44 c 5.934,-5.922 5.934,-15.518 0,-21.44 l -32.163,-32.165 21.44,-21.506 32.177,32.226 c 5.923,5.923 15.521,5.923 21.443,0 l 21.441,-21.44 c 5.922,-5.985 5.922,-15.515 0,-21.502 z M 301.488,73.98 c 17.768,-17.768 46.619,-17.768 64.387,0 17.702,17.709 17.702,46.612 0,64.324 -17.768,17.709 -46.619,17.709 -64.387,0 -17.712,-17.711 -17.712,-46.614 0,-64.324 z"
+         id="path8127" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="436.31979"
+       y="857.23053"
+       id="text7166-8-0-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan7168-2-2-6"
+         x="436.31979"
+         y="857.23053"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:Hack;-inkscape-font-specification:Hack;fill:#4d4d4d">unlock<tspan
+   style="font-size:12.5px;fill:#999999"
+   id="tspan7888-2" /></tspan><tspan
+         sodipodi:role="line"
+         x="436.31979"
+         y="873.48865"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:Hack;-inkscape-font-specification:Hack;fill:#4d4d4d"
+         id="tspan8795"><tspan
+           style="font-size:12.5px;fill:#999999"
+           id="tspan8797">(scriptSig)</tspan></tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker8803)"
+       d="m 432.41866,860.71174 -9.99999,15"
+       id="path7890-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect6126"
+       width="253.57143"
+       height="97.142853"
+       x="14.999998"
+       y="784.505"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect6124"
+       width="254.28572"
+       height="257.14285"
+       x="14.999998"
+       y="783.79077"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,899.50495 227.670478,0"
+       id="path4196-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:1.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker18122)"
+       d="m 341.04883,895.75914 -82.72226,4.16315"
+       id="path4371-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-transaction.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,919.50495 227.670478,0"
+       id="path4196-2-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,939.50495 227.670478,0"
+       id="path4196-2-0-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,959.50495 227.670478,0"
+       id="path4196-2-0-2-3"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,979.50495 227.670478,0"
+       id="path4196-2-0-2-3-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,999.50495 227.670478,0"
+       id="path4196-2-0-2-3-7-5"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:9.56994724;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 26.879052,1019.505 227.670478,0"
+       id="path4196-2-0-2-3-7-5-9"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:115.99999666%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="23.714275"
+       y="801.07648"
+       id="text6263"
+       sodipodi:linespacing="116%"
+       inkscape:export-filename="/home/greg/learnmeabitcoin/website/neo4j/how/images/2-block.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="801.07648"
+         id="tspan6269"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack">version</tspan><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="815.57648"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack"
+         id="tspan6283">previous block</tspan><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="830.07648"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack"
+         id="tspan6281">merkle root</tspan><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="844.57648"
+         id="tspan6271"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack">time</tspan><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="859.07648"
+         id="tspan6273"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack">bits</tspan><tspan
+         sodipodi:role="line"
+         x="23.714275"
+         y="873.57648"
+         id="tspan6275"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:115.99999666%;font-family:Hack;-inkscape-font-specification:Hack">nonce</tspan></text>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ddafe9;fill-opacity:1;fill-rule:evenodd;stroke:#672178;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect18253"
+       width="44.285713"
+       height="14.285714"
+       x="12.857143"
+       y="763.07648" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#87cdde;fill-opacity:1;fill-rule:evenodd;stroke:#164450;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect18253-4"
+       width="35.714279"
+       height="14.285706"
+       x="60.857147"
+       y="763.07648" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="21.285711"
+       y="773.79077"
+       id="text18270"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan18272"
+         x="21.285711"
+         y="773.79077"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:'SV Basic Manual';-inkscape-font-specification:'SV Basic Manual'">Magic</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="68.14286"
+       y="773.79077"
+       id="text18270-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan18272-7"
+         x="68.14286"
+         y="773.79077"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:'SV Basic Manual';-inkscape-font-specification:'SV Basic Manual'">Size</tspan></text>
+  </g>
+</svg>
