@@ -137,6 +137,12 @@ redis-cli hgetall bitcoin-to-neo4j:log
 
 ## FAQ
 
+### How does this work?
+
+I've written a complete guide on [how to import Bitcoin in to Neo4j](docs/how.md).
+
+It covers the basic data structures of Bitcoin, and how to represent them in Neo4j.
+
 ### How can I query this database?
 
 Here are some [example cypher queries](docs/cypher.md), including some screenshots.
