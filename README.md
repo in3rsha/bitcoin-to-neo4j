@@ -1,3 +1,13 @@
+**This project is now archived.**
+
+This tool _does_ work for importing blockchain data in to Neo4j, but it's **very slow**.
+
+It imports each block and transaction individually, and there's so much data that it will take years to get up to date with the current tip of the blockchain (if ever).
+
+I haven't got the time to maintain this project, so that's why I'm archiving it. However, if you want to create your own (faster) tool, I've written a guide on [how to import Bitcoin in to Neo4j](docs/how.md) that you may find helpful.
+
+-----
+
 # Bitcoin to Neo4j
 
 ![](docs/images/splash.png)
